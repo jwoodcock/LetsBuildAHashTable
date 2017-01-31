@@ -7,7 +7,7 @@ This is a live presentation/tutorial that the audience can code along with. To d
 - IDE or text editor of choosing
 - make (make file provided)
 
-To compile, simply type `make`. To see benchmarks type `make benchmark && ./benchmark < sam.txt`
+To compile, simply type `make`.  To run the app type `./PyHash`. Or do both with `make && ./PyNash`
 
 
 
