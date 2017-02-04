@@ -35,15 +35,15 @@ struct our_hash {
  * In C we have to predefine all our methods and their types
  */
 // we'll define 4 hash algorithms for testing
-size_t              hash(char const *value);
-unsigned long       hash2(char const *str);
-unsigned int        hash3(char const *value);
+unsigned long       hash(char const *value);
+unsigned long       hash2(char const *value);
+unsigned long        hash3(char const *value);
 unsigned long       worst_hash(char const *value);
 // our CRUD for the table
 unsigned int        add_entry(char const *fname, char const *lname, char const *value);
 void                remove_entry();
 void                update_entry(char const *fname, char const *lname, char const *email, char const *old_email);
-struct our_hash *   look_up(char const *email);
+struct our_hash*    look_up(char const *email);
 unsigned long       hash_key(char const *key); // rename to something more obvious
 void                list_values();
 // Utility for swapping hash to use
@@ -147,7 +147,7 @@ void handle_look_up()
     printf("Enter an email to search for. \n");
     printf("%s\n", KNRM);
     scanf("%s", email);
-    struct our_hash * entry = look_up(email);
+    struct our_hash* entry = look_up(email);
 
     if (strcmp(entry->fname, "") != 0) {
         printf("  First Name: %s\n", entry->fname);
@@ -168,7 +168,7 @@ void handle_look_up()
  * This method does a hash look up for a povided email and returns
  * a pointer to a match if one is found or NULL if one is not found.
  */
-struct our_hash * look_up(char const *email)
+struct our_hash* look_up(char const *email)
 {
     unsigned int hash_value = hash_key(email);
     unsigned int offset = hash_value % table_size;
@@ -203,7 +203,7 @@ void remove_entry()
     printf("%s\n", KNRM);
     scanf("%s", email);
 
-    struct our_hash * entry = look_up(email);
+    struct our_hash* entry = look_up(email);
     if (entry->in_use && strcmp(entry->email, email) == 0) {
         printf("%s\n", KRED);
         printf("We have removed the entry for %s\n", entry->email);
@@ -221,7 +221,7 @@ void remove_entry()
  */
 void update_entry(char const *fname, char const *lname, char const *email, char const *old_email)
 {
-    struct our_hash * entry = look_up(old_email);
+    struct our_hash* entry = look_up(old_email);
     if (entry->in_use && strcmp(entry->email, old_email) == 0) {
 
             printf("%s\n", KYEL);
@@ -363,7 +363,7 @@ unsigned int set_hash(unsigned int hash)
 /**
  * Hash 1 which uses bitshifting
  */
-size_t hash(char const *value)
+unsigned long hash(char const *value)
 {
     const int ret_size = 32;
     size_t ret = 0x555555;
@@ -395,7 +395,7 @@ unsigned long hash2(char const *value)
  * Hash 3 simple hashing based on the length of the provided key
  * Would not use in production.
  */
-unsigned int hash3(char const *value)
+unsigned long hash3(char const *value)
 {
     unsigned int h = 0;
     for (size_t i = 0; i < strlen(value); i++) {
